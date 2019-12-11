@@ -95,3 +95,33 @@ class Database:
       cursor.execute(sql_command,{'title':public_event.title,'types':public_event.types,'location':public_event.location,'description':public_event.description,'start_time':public_event.start_time,'end_time':public_event.end_time})
       connection.commit()
       cursor.close()
+
+
+  def delete_event_from_calendar(self,calendar):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="DELETE FROM CALENDAR WHERE (USER_ID = %(user_id)s AND EVENT_ID = %(user_id)s)"
+      cursor.execute(sql_command,{'user_id':calendar.user_id,'event_id':calendar.event_id})
+      connection.commit()
+      cursor.close()
+  def delete_group(self,group_id):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="DELETE FROM GROUP WHERE (GROUP_ID = %(group_id)s)"
+      cursor.execute(sql_command,{'group_id':group_id})
+      connection.commit()
+      cursor.close()
+  def delete_member_from_group(self,member):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="DELETE FROM MEMBER WHERE (USER_ID = %(user_id)s AND GROUP_ID = %(group_id)s)"
+      cursor.execute(sql_command,{'user_id':member.user_id,'event_id':member.group_id})
+      connection.commit()
+      cursor.close()
+  def delete_member_from_group(self,past_event):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="DELETE FROM PAST_EVENT WHERE (ID = %(id)s)"
+      cursor.execute(sql_command,{'id':past_event.id})
+      connection.commit()
+      cursor.close()
