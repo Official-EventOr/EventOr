@@ -14,6 +14,13 @@ class Database:
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
+  def add_hobby(self,hobby):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="INSERT INTO HOBBY (USER_ID,NAME) VALUES (%(user_id)s, %(name)s)"
+      cursor.execute(sql_command,{'user_id':hobby.user_id,'name':hobby.name})
+      connection.commit()
+      cursor.close()  
   def create_member(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
@@ -49,6 +56,13 @@ class Database:
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
+  def add_past_event(self,past_event):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="INSERT INTO EVENT (GROUP_ID,TYPE,LOCATION,TITLE,START_TIME,END_TIME,DESCRIPTION,) VALUES (%(group_id)s, %(location)s,%(title)s,%(start_time)s,%(end_time)s,%(description)s)"
+      cursor.execute(sql_command,{'group_id':past_event.user_name,'location':past_event.location,'location':past_event.location,'title':past_event.title,'start_time':past_event.start_time,'end_time':past_event.end_time,'description':past_event.description})
+      connection.commit()
+      cursor.close()      
   def create_calendar(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
