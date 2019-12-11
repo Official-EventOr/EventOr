@@ -21,6 +21,13 @@ class Database:
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
+  def add_member(self,member):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="INSERT INTO MEMBER (USER_ID,GROUP_ID) VALUES ( %(user_id)s, %(group_id)s)"
+      cursor.execute(sql_command,{'user_id':member.user_id,'group_id':member.group_id})
+      connection.commit()
+      cursor.close()      
   def create_group(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
@@ -63,7 +70,7 @@ class Database:
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
-   def add_public_event(self,public_event):
+  def add_public_event(self,public_event):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
       sql_command="INSERT INTO MEMBER (ID,TITLE,TYPES,LOCATION,DESCRIPTION,START_TIME,END_TIME) VALUES ( %(id)s, %(title)s, %(types)s, %(location)s, %(description)s, %(start_time)s, %(end_time)s)"
