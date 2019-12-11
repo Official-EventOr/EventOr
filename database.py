@@ -125,3 +125,17 @@ class Database:
       cursor.execute(sql_command,{'id':past_event.id})
       connection.commit()
       cursor.close()
+  def delete_public_event(self,hobby):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="DELETE FROM PUBLIC_EVENT WHERE (ID = %(id)s)"
+      cursor.execute(sql_command,{'id':public_event.id})
+      connection.commit()
+      cursor.close()    
+  def delete_hobby(self,hobby):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="DELETE FROM HOBBY WHERE (USER_ID = %(user_id)s AND NAME = %(name)s)"
+      cursor.execute(sql_command,{'user_id':hobby.user_id,'event_id':hobby.name})
+      connection.commit()
+      cursor.close()
