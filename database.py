@@ -2,8 +2,12 @@ from flask import Flask
 import psycopg2 as dbapi2
 from passlib.hash import pbkdf2_sha256 as hasher
 from flask_login import UserMixin
-from balance import Balance
-
+from hobby import Hobby
+from member import Member
+from group import Group
+from past_event import Past_Event
+from calendar import Calendar
+from public_event import Public_Event
 class Database:
   def __init__(self, connection_string):
     self.connection_string = connection_string
@@ -45,8 +49,8 @@ class Database:
    def add_group(self,group):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="INSERT INTO GROUP (ID,NAME,LEADER_ID) VALUES ( %(id)s, %(name)s, %(leader_id)s)"
-      cursor.execute(sql_command,{'id':group.id,'name':group.name,'leader_id':group.leader_id})
+      sql_command="INSERT INTO GROUP (NAME,LEADER_ID) VALUES ( %(id)s, %(name)s, %(leader_id)s)"
+      cursor.execute(sql_command,{'name':group.name,'leader_id':group.leader_id})
       connection.commit()
       cursor.close()
   def create_past_event(self):
@@ -87,7 +91,7 @@ class Database:
   def add_public_event(self,public_event):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="INSERT INTO MEMBER (ID,TITLE,TYPES,LOCATION,DESCRIPTION,START_TIME,END_TIME) VALUES ( %(id)s, %(title)s, %(types)s, %(location)s, %(description)s, %(start_time)s, %(end_time)s)"
-      cursor.execute(sql_command,{'id':public_event.id,'title':public_event.title,'types':public_event.types,'location':public_event.location,'description':public_event.description,'start_time':public_event.start_time,'end_time':public_event.end_time})
+      sql_command="INSERT INTO MEMBER (TITLE,TYPES,LOCATION,DESCRIPTION,START_TIME,END_TIME) VALUES ( %(id)s, %(title)s, %(types)s, %(location)s, %(description)s, %(start_time)s, %(end_time)s)"
+      cursor.execute(sql_command,{'title':public_event.title,'types':public_event.types,'location':public_event.location,'description':public_event.description,'start_time':public_event.start_time,'end_time':public_event.end_time})
       connection.commit()
       cursor.close()
